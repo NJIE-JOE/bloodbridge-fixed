@@ -18,3 +18,4 @@
         require_once "../include/auth.php";
 
         requireRole(["admin"]);
+        
