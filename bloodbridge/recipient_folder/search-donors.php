@@ -1,7 +1,8 @@
 <?php
 
-require_once "db.php";
-require_once "./bloodbridge/includes/config.php";
+require_once "../includes/config.php";
+require_once "../includes/auth.php";
+requireRole(["recipient", "admin"]);
 
 
 
@@ -17,11 +18,11 @@ $sql = "SELECT
             donors.weight,
             donors.city,
             donors.last_donation_date,
-            donors.is_available
+            donors.available
         FROM donors
         INNER JOIN users
             ON donors.user_id = users.id
-        WHERE donors.is_available = TRUE";
+        WHERE donors.available = TRUE";
 
 
 $params = [];
@@ -301,7 +302,7 @@ $conn->close();
                         <div class="availability">
 
                             <?php
-                            if ($donor["is_available"]) {
+                            if ($donor["available"]) {
                                 echo "AVAILABLE";
                             }
                             ?>

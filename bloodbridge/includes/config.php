@@ -42,7 +42,7 @@ mysqli_query($conn, "CREATE TABLE IF NOT EXISTS donors (
     user_id INT,
     blood_group VARCHAR(5),
     age INT,
-    weight INT,
+    weight DECIMAL(5,2),
     city VARCHAR(60),
     available TINYINT DEFAULT 1,
     last_donation_date DATE
@@ -84,6 +84,9 @@ mysqli_query($conn, "CREATE TABLE IF NOT EXISTS appointments (
     status VARCHAR(20) DEFAULT 'scheduled'
 )");
 
+mysqli_query($conn, "ALTER TABLE appointments ADD COLUMN location VARCHAR(150) NULL");
+mysqli_query($conn, "ALTER TABLE appointments ADD UNIQUE KEY uq_hospital_appointment_time (hospital_id, appointment_time)");
+
 mysqli_query($conn, "CREATE TABLE IF NOT EXISTS inventory (
     id INT AUTO_INCREMENT PRIMARY KEY,
     hospital_id INT,
@@ -106,6 +109,11 @@ mysqli_query($conn, "CREATE TABLE IF NOT EXISTS password_resets (
     token VARCHAR(64),
     expires_at DATETIME
 )");
+
+mysqli_query($conn, "ALTER TABLE hospitals ADD COLUMN verified_at DATETIME NULL");
+mysqli_query($conn, "ALTER TABLE inventory ADD UNIQUE KEY uq_hospital_blood_group (hospital_id, blood_group)");
+mysqli_query($conn, "ALTER TABLE donors MODIFY COLUMN weight DECIMAL(5,2)");
+mysqli_query($conn, "ALTER TABLE password_resets ADD COLUMN used_at DATETIME NULL");
 
 
 $check = mysqli_query($conn, "SELECT id FROM users LIMIT 1");

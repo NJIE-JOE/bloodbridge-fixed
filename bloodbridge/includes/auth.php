@@ -11,13 +11,10 @@ function requireLogin()
 {
     if (!isset($_SESSION["user_id"])) {
         /*
-         * FIX (linking pass): this is called from pages like
-         * auth&validation/donor/dashboard.php, so "Location: ../auth/login.php"
-         * resolved to the nonexistent auth&validation/auth/login.php. The real
-         * login.php lives at the project root, two levels up from any
-         * <role>/dashboard.php page that calls this function.
+         * Role pages live one directory below the project root, so the shared
+         * login page is one level above them.
          */
-        header("Location: ../../login.php");
+        header("Location: ../login.php");
         exit;
     }
 }

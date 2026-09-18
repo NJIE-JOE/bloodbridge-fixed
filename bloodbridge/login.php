@@ -59,13 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           
             switch ($user["role"]) {
                 case "donor":
-                    header("Location: auth&validation/donor/dashboard.php");
+                    header("Location: donor/dashboard.php");
                     exit;
                 case "recipient":
                     header("Location: recipient_folder/search-donors.php");
                     exit;
                 case "hospital":
-                    header("Location: auth&validation/hospital/dashboard.php");
+                    header("Location: hospital/dashboard.php");
                     exit;
                 case "admin":
                     header("Location: bdms-admin/bdms-admin/admin/dashboard.php");
@@ -79,20 +79,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-        >
-        <title>Login | Blood Donation Management System</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-
-    <body>
+<?php
+// Changed: reuse the same site header as index.php so login has identical navigation, branding, CSS, and Font Awesome assets.
+$page_title = "Log In";
+require "includes/public_header.php";
+?>
+        <!-- Changed: keep the login form inside the shared page shell opened by public_header.php. -->
         <main class="auth-container">
             <section class="auth-card">
                 <h1>Welcome Back</h1>
@@ -156,9 +148,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     <div class="auth-links">
 
-                        <a href="forgot-password.php">
-                            Forgot Password?
-                        </a>
                         <a href="register.php">
                             Create an Account
                         </a>
@@ -167,8 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </form>
             </section>
         </main>
-        <?php
-            require_once "./includes/public_footer.php";
-        ?>
-    </body>
-</html>
+<?php
+// Changed: reuse the same footer as index.php, including its navigation, social links, and shared JavaScript.
+require "includes/public_footer.php";
+?>

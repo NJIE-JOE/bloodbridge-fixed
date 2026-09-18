@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/donationcenters.css">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="/@fortawesome/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 <body>
 
