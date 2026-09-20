@@ -27,7 +27,7 @@ require "includes/public_header.php";
         <div class="hero__actions">
             <a href="register.php" class="btn btn-white">Become a Donor</a>
             <a href="register.php" class="btn btn-outline-white">Request Blood</a>
-            <a href="bdms-admin/bdms-admin/login.php" class="btn btn-outline-white">Admin Access</a>
+            <!-- <a href="bdms-admin/bdms-admin/login.php" class="btn btn-outline-white">Admin Access</a> -->
         </div>
         <div class="hero__stats count-container">
             <div>

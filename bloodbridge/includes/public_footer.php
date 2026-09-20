@@ -11,12 +11,6 @@
                     platform — so eligibility, inventory, and matching happen
                     in minutes, not phone calls.
                 </p>
-                <!--
-                    FIX (linking pass): these links were missing "https://", so
-                    "facebook.com" was being treated as a page named
-                    facebook.com relative to this site instead of an external
-                    link. Added the scheme.
-                -->
                 <div class="footer-socials">
                     <a href="https://facebook.com" aria-label="Facebook" title="facebook.com"><i class="fa-brands fa-facebook"></i></a>
                     <a href="https://instagram.com" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -30,7 +24,6 @@
                     <li><a href="/index.php">Home</a></li>
                     <li><a href="/eligibility.php">Eligibility</a></li>
                     <li><a href="/compatibility.php">Compatibility</a></li>
-                    <!-- FIX (linking pass): pointed at donationcenter.php (singular) — the actual filename in this project; "donationcenters.php" 404s. -->
                     <li><a href="/donationcenter.php">Donation Centers</a></li>
                 </ul>
             </div>
@@ -62,4 +55,3 @@
 <script src="js/main.js"></script>
 </body>
 </html>
-<!-- FIX (linking pass): removed a leftover duplicate <script>/</body>/</html> block that was sitting here inside an HTML comment — dead markup, never rendered, just noise. -->

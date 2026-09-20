@@ -2,14 +2,7 @@
 
 session_start();
 
-/*
- * FIX (linking pass): every page in this project that needs CSRF protection
- * (register.php, login.php) was requiring includes/config.php but NOT
- * includes/csrf.php, so generateCsrfToken()/verifyCsrfToken() were undefined
- * there. Pulling csrf.php in here means any page that already loads
- * config.php automatically gets working CSRF functions too, without having
- * to remember a second require on every page.
- */
+
 require_once __DIR__ . "/csrf.php";
 
 $db_host = "localhost";
@@ -140,17 +133,7 @@ if (mysqli_num_rows($check) == 0) {
         ('Brenda Fon', 'brenda@bdms.test', '$hashed', '670000004', 'recipient', 'active')");
     $recipient_id = mysqli_insert_id($conn);
 
-    /*
-     * FIX (linking pass): everything below this point referenced
-     * $hospital1_id and $donor1_id, but neither variable was ever created —
-     * there was no hospital user/hospital record inserted, and the donor
-     * variable created above was actually named $donor1_user_id, not
-     * $donor1_id. Every INSERT below was silently writing broken foreign
-     * keys (undefined vars become "" then 0 in a numeric column). Added the
-     * missing hospital user + hospitals row, and pointed the later inserts
-     * at the correct donor id.
-     */
-
+    
     // 1 hospital (user account + matching hospitals row)
     mysqli_query($conn, "INSERT INTO users (name, email, password, phone, role, status) VALUES
         ('Buea General Hospital', 'buea.general@bdms.test', '$hashed', '670000005', 'hospital', 'active')");

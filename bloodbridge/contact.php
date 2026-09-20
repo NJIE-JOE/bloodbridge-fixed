@@ -1,14 +1,8 @@
 <?php
-/*
- * FILE: contact.php
- * PURPOSE: Public contact page. It displays contact/help information for people using the system.
- * NOTE: The executable code below is unchanged; comments are added to explain it.
- */
-// Load a shared file needed by this page.
+
 require "includes/config.php";
 
 $sent_ok = false;
-// Handle form submission when the user sends a POST request.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']);
     $message = trim($_POST['message']);
@@ -18,22 +12,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 $hospitals = array();
-// Run a MySQL query and store the returned result.
 $result = mysqli_query($conn, "SELECT hospitals.* FROM hospitals
                                 JOIN users ON users.id = hospitals.user_id
                                 WHERE users.status = 'active'");
-// Loop through all rows returned by the database query.
 while ($row = mysqli_fetch_assoc($result)) {
     $hospitals[] = $row;
 }
 
-// Set the title used by the shared page header.
 $page_title = "Donation Centers";
-// Load a shared file needed by this page.
 require "includes/public_header.php";
 ?>
 
-<!-- Page section: this block creates one visual/content section of the interface. -->
 <section class="section">
   <div class="container">
     <p class="label-eyebrow">Find a Center</p>
@@ -58,7 +47,6 @@ require "includes/public_header.php";
       <?php if ($sent_ok) { ?>
         <div class="alert alert-success" style="margin-top:16px;">Thanks! We'll get back to you soon.</div>
       <?php } else { ?>
-<!-- Form block: collects user input and sends it to the page for processing. -->
         <form method="post" style="display:flex; flex-direction:column; gap:16px; margin-top:16px;">
           <div class="field">
             <label for="name">Your Name</label>

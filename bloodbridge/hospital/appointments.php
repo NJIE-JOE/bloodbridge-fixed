@@ -81,6 +81,70 @@ mysqli_stmt_bind_param($appointments_stmt, "i", $hospital_id);
 mysqli_stmt_execute($appointments_stmt);
 $appointments = mysqli_stmt_get_result($appointments_stmt);
 ?>
-<?php $page_title="Appointments"; require "header.php"; ?><main class="role-main"><div class="role-container"><p class="role-kicker">Hospital</p><h1 class="role-title">Donation Appointments</h1><p class="role-subtitle">Schedule eligible donors and keep each appointment slot unique.</p><?php require "tabs.php"; ?>
-<?php if ($message !== ""): ?><p class="badge badge-fulfilled"><?= htmlspecialchars($message) ?></p><?php endif; ?><?php if ($error !== ""): ?><p class="badge badge-cancelled"><?= htmlspecialchars($error) ?></p><?php endif; ?>
-<section class="role-form" style="margin-bottom:22px"><h2>Schedule an appointment</h2><form method="post" class="role-form-grid"><input type="hidden" name="action" value="schedule"><div><label for="donor_id">Eligible donor</label><select id="donor_id" name="donor_id" required><?php while($donor=mysqli_fetch_assoc($donors)): ?><option value="<?= (int)$donor["id"] ?>"><?= htmlspecialchars($donor["name"]." - ".$donor["blood_group"]." (".$donor["city"].")") ?></option><?php endwhile; ?></select></div><div><label for="appointment_time">Date and time</label><input id="appointment_time" name="appointment_time" type="datetime-local" required></div><div><label for="location">Extraction location</label><input id="location" name="location" value="<?= htmlspecialchars($hospital["city"]??"") ?>" required></div><button class="role-button" type="submit">Schedule</button></form></section><section class="role-table-wrap"><table class="role-table"><thead><tr><th>Donor</th><th>When</th><th>Location</th><th>Status</th><th>Update</th></tr></thead><tbody><?php while($row=mysqli_fetch_assoc($appointments)): ?><tr><td><?= htmlspecialchars($row["donor_name"]." - ".$row["blood_group"]) ?></td><td><?= htmlspecialchars($row["appointment_time"]) ?></td><td><?= htmlspecialchars($row["location"]) ?></td><td><?= htmlspecialchars($row["status"]) ?></td><td><form method="post"><input type="hidden" name="action" value="status"><input type="hidden" name="appointment_id" value="<?= (int)$row["id"] ?>"><select name="status"><option>scheduled</option><option>completed</option><option>cancelled</option><option>no-show</option></select><button class="role-button" type="submit">Update</button></form></td></tr><?php endwhile; ?></tbody></table></section></div></main>
+<?php $page_title = "Appointments";
+require "header.php"; ?><main class="role-main">
+    <div class="role-container">
+        <p class="role-kicker">Hospital</p>
+        <h1 class="role-title">Donation Appointments</h1>
+        <p class="role-subtitle">Schedule eligible donors and keep each appointment slot unique.</p><?php require "tabs.php"; ?>
+        <?php if ($message !== ""): ?><p class="badge badge-fulfilled"><?= htmlspecialchars($message) ?></p><?php endif; ?>
+        <?php if ($error !== ""): ?><p class="badge badge-cancelled"><?= htmlspecialchars($error) ?></p><?php endif; ?>
+        <section class="role-form" style="margin-bottom:22px">
+            <h2>Schedule an appointment</h2>
+            <form method="post" class="role-form-grid">
+                <input type="hidden" name="action" value="schedule">
+                <div>
+                    <label for="donor_id">Eligible donor</label>
+                    <select id="donor_id" name="donor_id" required>
+                        <?php while ($donor = mysqli_fetch_assoc($donors)): ?>
+                            <option value="<?= (int)$donor["id"] ?>">
+                                <?= htmlspecialchars($donor["name"] . " - " . $donor["blood_group"] . " (" . $donor["city"] . ")") ?>
+                            </option><?php endwhile; ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="appointment_time">Date and time</label>
+                    <input id="appointment_time" name="appointment_time" type="datetime-local" required>
+                </div>
+                <div>
+                    <label for="location">Extraction location</label>
+                    <input id="location" name="location" value="<?= htmlspecialchars($hospital["city"] ?? "") ?>" required>
+                </div>
+                <button class="role-button" type="submit">Schedule</button>
+            </form>
+        </section>
+        <section class="role-table-wrap">
+            <table class="role-table">
+                <thead>
+                    <tr>
+                        <th>Donor</th>
+                        <th>When</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody><?php while ($row = mysqli_fetch_assoc($appointments)): ?><tr>
+                            <td><?= htmlspecialchars($row["donor_name"] . " - " . $row["blood_group"]) ?></td>
+                            <td><?= htmlspecialchars($row["appointment_time"]) ?></td>
+                            <td><?= htmlspecialchars($row["location"]) ?></td>
+                            <td><?= htmlspecialchars($row["status"]) ?></td>
+                            <td>
+                                <form method="post">
+                                    <input type="hidden" name="action" value="status">
+                                    <input type="hidden" name="appointment_id" value="<?= (int)$row["id"] ?>">
+                                    <select name="status">
+                                            <option>scheduled</option>
+                                            <option>completed</option>
+                                            <option>cancelled</option>
+                                            <option>no-show</option>
+                                    </select>
+                                    <button class="role-button" type="submit">Update</button>
+                                </form>
+                            </td>
+                        </tr><?php endwhile; ?>
+                    </tbody>
+            </table>
+        </section>
+    </div>
+</main>
